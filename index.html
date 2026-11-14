@@ -91,7 +91,7 @@ h1 em{font-style:italic;font-weight:400}
 .actions{display:flex;align-items:center;gap:26px;margin-top:34px;flex-wrap:wrap}
 .hero-visual{grid-column:9/span 4}
 .portrait{aspect-ratio:4/5;border:1px solid var(--line);background:#E6DAC8;overflow:hidden;position:relative}
-.portrait svg,.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.portrait svg{width:100%;height:100%}
 .portrait-caption{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:12px}
 .proof-line{border-top:1px solid var(--line);padding-top:18px;margin-top:40px;display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.5}
 .proof-line .sep{color:var(--line)}
@@ -414,12 +414,9 @@ h2{font-size:clamp(38px,4.2vw,58px);line-height:1.04}
 @media print{
   .site-header,.site-footer,.no-print{display:none!important}
   body{background:#fff}
-  .page{display:none!important}
+  .page[hidden]{display:none!important}
   #page-resume{display:block!important}
   .resume-page{padding:0}
-}
-@media (min-width:821px){
-  .mobile-menu{display:none!important}
 }
 
 /* Keep horizontal padding when a container also carries a section class */
@@ -469,7 +466,15 @@ h2{font-size:clamp(38px,4.2vw,58px);line-height:1.04}
     </div>
     <div class="hero-visual">
       <div class="portrait">
-        <img src="mufina.png" alt="Mufina at her desk, photographed from behind" width="928" height="1152" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+        <svg viewBox="0 0 480 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="480" height="600" fill="#E6DAC8"/>
+          <circle cx="366" cy="132" r="148" fill="#D6C5AE"/>
+          <path d="M72 600V314c0-92 75-167 168-167s168 75 168 167v286z" fill="#CBB79C"/>
+          <circle cx="240" cy="282" r="84" fill="#2B2823"/>
+          <path d="M96 600c0-96 64-158 144-158s144 62 144 158z" fill="#2B2823"/>
+          <path d="M240 198v-46" stroke="#A8482B" stroke-width="3"/>
+          <circle cx="240" cy="146" r="6" fill="#A8482B"/>
+        </svg>
       </div>
       <div class="portrait-caption"><span>Mufina</span><span>Tamil Nadu, India</span></div>
     </div>
@@ -851,7 +856,7 @@ h2{font-size:clamp(38px,4.2vw,58px);line-height:1.04}
 
       <h2>Visual system</h2>
       <p>Warm, not clinical. Soft colour, plain language, friendly illustration. I built a reusable Figma system with buttons, inputs, cards, navigation, status indicators, and progress components, plus colour tokens, a type scale, and spacing rules.</p>
-      <p>I also keep a component count on my résumé. The point wasn't the number. It was making the next screen faster to build than the last one.</p>
+      <p>I also keep a component count on my résumé. If it's 40+, say 40+. If it isn't, drop the number. The system itself is the point.</p>
 
       <h2 id="gentli-testing">What testing showed</h2>
       <div class="metrics">
@@ -1273,7 +1278,15 @@ h2{font-size:clamp(38px,4.2vw,58px);line-height:1.04}
   <div class="container about-hero">
     <div class="about-portrait">
       <div class="portrait">
-        <img src="mufina.png" alt="Mufina at her desk, photographed from behind" width="928" height="1152" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+        <svg viewBox="0 0 480 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="480" height="600" fill="#E6DAC8"/>
+          <circle cx="366" cy="132" r="148" fill="#D6C5AE"/>
+          <path d="M72 600V314c0-92 75-167 168-167s168 75 168 167v286z" fill="#CBB79C"/>
+          <circle cx="240" cy="282" r="84" fill="#2B2823"/>
+          <path d="M96 600c0-96 64-158 144-158s144 62 144 158z" fill="#2B2823"/>
+          <path d="M240 198v-46" stroke="#A8482B" stroke-width="3"/>
+          <circle cx="240" cy="146" r="6" fill="#A8482B"/>
+        </svg>
       </div>
       <div class="portrait-caption"><span>Mufina</span><span>Tamil Nadu, India</span></div>
     </div>
@@ -1550,15 +1563,10 @@ h2{font-size:clamp(38px,4.2vw,58px);line-height:1.04}
     });
   }
 
-  document.querySelectorAll('.visual, .portrait').forEach(function (v) {
-    v.setAttribute('aria-hidden', 'true');
-  });
-
   document.querySelectorAll('[data-scroll]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var target = document.getElementById(btn.getAttribute('data-scroll'));
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       var siblings = btn.parentElement.querySelectorAll('.rail-link');
       siblings.forEach(function (s) { s.classList.remove('active'); });
       btn.classList.add('active');
